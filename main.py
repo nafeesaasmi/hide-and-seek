@@ -1,5 +1,5 @@
 radio.set_group(1)      # the radio frequency we will be using, leave on 1
-myID = 7                # The ID # given to you by the teacher
+myID = 0                # The ID # given to you by the teacher
 signalStrength = -999   # keeps track of the signal strength to let you know when you dont have a signal anymore
 hasSignal = False       # this flag will be true when you are receiving a signal
 wasFound = False        # this flag will be true when you have found the transmitter
@@ -7,7 +7,6 @@ showNum = False         # this flag with be true when displaying the signal stre
 
 # gets called when the device recieves a signal from the transmitter
 # a signal is sent from the transmitter every 500ms
-
 def on_received_number(receivedNumber):
     global hasSignal, signalStrength, wasFound
     # the transmitter will send a 0 every 500ms
@@ -16,7 +15,7 @@ def on_received_number(receivedNumber):
         signalStrength = radio.received_packet(RadioPacketProperty.SIGNAL_STRENGTH)
     # the transmitter will echo back your ID when it records it as found
     elif receivedNumber == myID:
-        wasFound = True
+        true = wasFound
 radio.on_received_number(on_received_number)
 
 # for debugging, will display the signal strength value
@@ -27,8 +26,8 @@ input.on_button_pressed(Button.A, on_button_pressed_a)
 
 # transmit your ID to the transmitter
 def on_button_pressed_b():
-    radio.send_number(myID)
-input.on_button_pressed(Button.B, on_button_pressed_b)
+    radio.send_number(myID*0)
+input.on_button_pressed(Button.B, on_button_pressed_a)
 
 # draws the bar graph and signal lost / winner icons
 def drawScreen():
@@ -44,9 +43,10 @@ def drawScreen():
 # heartbeat, checks that we still have a signal, otherwise will display that we lost it
 def on_every_interval():
     global hasSignal, signalStrength
-  if signalStrength <= -128 or signalStrength > -28:
-      hasSignal = False 
-
+    if hasSignal:
+hasSignal = False
+    else:
+        signalStrength = -9.99
 loops.every_interval(1000, on_every_interval)
 
 def on_forever():
