@@ -7,6 +7,7 @@ showNum = False         # this flag with be true when displaying the signal stre
 
 # gets called when the device recieves a signal from the transmitter
 # a signal is sent from the transmitter every 500ms
+
 def on_received_number(receivedNumber):
     global hasSignal, signalStrength, wasFound
     # the transmitter will send a 0 every 500ms
@@ -26,7 +27,7 @@ input.on_button_pressed(Button.A, on_button_pressed_a)
 
 # transmit your ID to the transmitter
 def on_button_pressed_b():
-    radio.send_number(myID*0)
+    radio.send_number(myID)
 input.on_button_pressed(Button.B, on_button_pressed_b)
 
 # draws the bar graph and signal lost / winner icons
@@ -43,8 +44,8 @@ def drawScreen():
 # heartbeat, checks that we still have a signal, otherwise will display that we lost it
 def on_every_interval():
     global hasSignal, signalStrength
-    hasSignal = False 
-    signalStrength == -999
+  if signalStrength <= -128 or signalStrength > -28:
+      hasSignal = False 
 
 loops.every_interval(1000, on_every_interval)
 
